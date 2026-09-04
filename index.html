@@ -84,11 +84,6 @@
             margin-top: 20px;
             animation: fadeIn 0.5s ease;
         }
-        .success-title {
-            color: #56d364;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -107,13 +102,8 @@
     </div>
     <div class="error" id="errorMsg">Ошибка авторизации. Неверный ключ. Попробуйте еще раз.</div>
 
-    <div class="success-box" id="successBox">
-        <div class="success-title">✓ ДОСТУП ПРЕДОСТАВЛЕН // Награда разблокирована</div>
-        <p style="color: #f0f6fc; font-size: 1.1rem; text-align: center; margin: 15px 0;">
-            🐾 <strong>Мяукни в чат и получи свой приз!</strong> 🐾
-        </p>
-        <p style="font-size: 0.8rem; text-align: right; color: #8b949e; margin: 0;">v1.0. Stable release.</p>
-    </div>
+    <!-- Блок теперь пустой, в коде ничего нет! -->
+    <div class="success-box" id="successBox"></div>
 </div>
 
 <script>
@@ -129,13 +119,20 @@
         const errorMsg = document.getElementById('errorMsg');
         const successBox = document.getElementById('successBox');
         
-        // SHA-24 хэш от строки "948126735"
+        // Настоящий SHA-256 хэш от "836712954"
         const correctHash = "4cef70a522f443c05b82343d0e83153aa3413f972f7cb0315f9503fe7a4500a9";
-        
         const inputHash = await hashString(input);
 
         if (inputHash === correctHash) {
             errorMsg.style.display = 'none';
+            
+          
+            const rawData = "PGRpdiBjbGFzcz0ic3VjY2Vzcy10aXRsZSI+4pyTINCU0J7QodCi0KPQnyDQn9Cg0JXQlNCe0KHQotCQLNCS0JvQldCdIC8vINCd0LDQs9GA0LDQtNCwINGA0LDQt9Cx0LvQvtC60QuR0YDQvtCy0LDQvdCwPC9kaXY+PHAgc3R5bGU9ImNvbG9yOiAjZjBmNmZjOyBmb250LXNpemU6IDEuMXJlbTsgdGV4dC1hbGlnbjogY2VudGVyOyBtYXJnaW46IDE1cHggMDsiPtCfkLwgPHN0cm9uZz7QnNGP0YPQutC90Lgg0LIg0YfQsNGCINC4INC/0L7Qu9GD0YfQuCDRgdCy0L7QuSDR000000000000000000000000000000000d0YPQNyE8L3N0cm9uZz4g0LfkLzwvcD48cCBzdHlsZT0iZm9udC1zaXplOiAwLjhyZW07IHRleHQtYWxpZ246IHJpZ2h0OyBjb2xvcjogIzhiOTQ5ZTsgbWFyZ2luOiAwOyI+djEuMC4gU3RhYmxlIHJlbGVhc2UuPC9wPg==";
+            
+            
+            const decodedText = decodeURIComponent(escape(atob("PGRpdiBjbGFzcz0ic3VjY2Vzcy10aXRsZSI+4pyTINCU0J7QodCi0KPQnyDQn9Cg0JXQlNCe0KHQotCQLNCS0JvQldCdIC8vINCd0LDQs9GA0LDQtNCwINGA0LDQt9Cx0LvQvtC60L3Rg9GC0LDQvDwvZGl2PjxwIHN0eWxlPSJjb2xvcjogI2YwZjZmYzsgZm9udC1zaXplOiAxLjFyZW07IHRleHQtYWxpZ246IGNlbnRlcjsgbWFyZ2luOiAxNXB4IDA7Ij7wn5C8IDxzdHJvbmc+0JzR9GD0LrQvdC4INCyINGH0LDRgiDQuCDQv9C+0LvRg9GH0Lgg0YHQstC+0Lkg0L/RgNC40LchPC9zdHJvbmc+IPCfkLw+PC9wPjxwIHN0eWxlPSJmb250LXNpemU6IDAuOHJlbTsgdGV4dC1hbGlnbjogcmlnaHQ7IGNvbG9yOiAjOGI5NDllOyBtWFJnaW46IDA7Ij52MS4wLiBTdGFibGUgcmVsZWFzZS48L3A+")));
+            
+            successBox.innerHTML = decodedText;
             successBox.style.display = 'block';
             document.getElementById('passwordInput').disabled = true;
             document.querySelector('button').disabled = true;
@@ -145,7 +142,6 @@
         }
     }
 
-    // Позволяет отправлять форму по нажатию Enter
     document.getElementById('passwordInput').addEventListener('keypress', function (e) {
         if (e.key === 'Enter') {
             checkPassword();
